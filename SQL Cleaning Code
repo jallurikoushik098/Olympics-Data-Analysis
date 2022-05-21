@@ -1,0 +1,17 @@
+SELECT
+		 [ID]
+		,[Name] AS 'Competitor Name' -- Renamed
+		,CASE WHEN SEX = 'M' THEN 'Male' ELSE 'Female' END AS Sex -- Better name for filters
+		,[Age]
+		,[Height]
+		,[Weight]
+		,[NOC] AS 'Nation Code' -- Explain abbreviation
+		,LEFT(Games, CHARINDEX(' ', Games) - 1) AS 'Year' -- Split column to isolate Year, based on space
+		,RIGHT(Games,CHARINDEX(' ', REVERSE(Games))-1) AS 'Season' -- Split column to isolate Season, based on space
+		,[Games]
+--		,[City] -- Commented out as it is not necessary for the analysis
+		,[Sport]
+		,[Event]
+		,CASE WHEN Medal = 'NA' THEN 'Not Registered' ELSE Medal END AS Medal -- Replaced NA with Not Registered
+  FROM [olympic_games].[dbo].[athletes_event_results]
+  WHERE RIGHT(Games,CHARINDEX(' ', REVERSE(Games))-1) = 'Summer' -- Where Clause to isolate Summer Season
